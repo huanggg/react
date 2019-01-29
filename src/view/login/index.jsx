@@ -3,7 +3,9 @@ import "./login.css";
 import LOGOimg from "../../static/images/LOGO.png";
 import logobig from "../../static/images/logobig.png";
 import { connect } from "react-redux";
-import { Input, Button } from "element-react";
+import { Input, Button, Message } from "element-react";
+import axios from "@/axios/index";
+import aes from "@/util/aes";
 // 登陆页面
 let logoimg = {
   width: 139,
@@ -29,7 +31,7 @@ class App extends Component {
     super(props);
     this.state = {
       isToggleOn: 1,
-      inpValu: "",
+      username: "",
       password: ""
     };
     // 点击事件并传参
@@ -64,7 +66,7 @@ class App extends Component {
   handelChange(e) {
     console.log("username", e);
     this.setState({
-      inpValu: e
+      username: e
     });
   }
   //用户输入密码处理函数
@@ -85,11 +87,41 @@ class App extends Component {
     }));
   }
   // 登陆
-  login() {
-    console.log(5555);
+  async login() {
+    const params = {
+      userAccount: aes.Encrypt(this.state.username.trim()),
+      password: aes.Encrypt(this.state.password.trim())
+    };
+    // /release/page/login
+    await axios("/release/page/login", params, "POST").then(res => {
+      if (res.data.resultCode === "0000") {
+        console.log("99999", res);
+        sessionStorage.setItem(
+          "tokenKey",
+          JSON.stringify(res.data.data.tokenValue)
+        );
+        sessionStorage.setItem(
+          "userName",
+          JSON.stringify(res.data.data.userName)
+        );
+        sessionStorage.setItem(
+          "userAccount",
+          JSON.stringify(res.data.data.userAccount)
+        );
+        if (sessionStorage.getItem("tokenKey")) {
+          this.props.history.push("/home");
+        }
+      } else {
+        Message({
+          message: "用户名,密码错误",
+          type: "error",
+          duration: 1000
+        });
+      }
+    });
   }
   render() {
-    const { value, conut, onIncreaseClick } = this.props;
+    // const { value, conut, onIncreaseClick } = this.props;
     return (
       <div className="login">
         <header className="login-header">
@@ -144,7 +176,7 @@ class App extends Component {
                 <Input
                   placeholder="请输入账号"
                   onChange={this.handelChange}
-                  defaultValue={this.state.inpValu}
+                  defaultValue={this.state.username}
                 />
               </div>
               <div style={{ color: "#b0bac4", marginTop: 26 }}>
@@ -153,6 +185,8 @@ class App extends Component {
               <div style={{ marginTop: 12 }}>
                 <Input
                   placeholder="请输入密码"
+                  type="password"
+                  onKeyDown={this.login}
                   onChange={this.handelChangepassword}
                   defaultValue={this.state.password}
                 />
