@@ -20,6 +20,7 @@ axios.interceptors.request.use(
     if (token) {
       // config.headers['X-YAuth-Token'] = token
       config.headers["Authorization"] = token;
+      console.log(token);
     }
     return config;
   },
@@ -64,3 +65,4 @@ export default (url, data = {}, method = "get") => {
       return { err };
     });
 };
+

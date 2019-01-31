@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./login.css";
-import LOGOimg from "../../static/images/LOGO.png";
-import logobig from "../../static/images/logobig.png";
+import LOGOimg from "@/static/images/LOGO.png";
+import logobig from "@/static/images/logobig.png";
 import { connect } from "react-redux";
 import { Input, Button, Message } from "element-react";
 import axios from "@/axios/index";
@@ -10,6 +10,12 @@ import aes from "@/util/aes";
 let logoimg = {
   width: 139,
   height: 22
+};
+let mainImage = {
+  backgroundImage: "url(" + require("../../static/images/logobg.png") + ")"
+};
+let dengluImage = {
+  backgroundImage: "url(" + require("../../static/images/denglubg.png") + ")"
 };
 //状态管理 的state
 function mapState(state) {
@@ -35,7 +41,7 @@ class App extends Component {
       password: ""
     };
     // 点击事件并传参
-    this.handleClick = this.handleClick.bind(this, 2);
+    this.handleClick = this.handleClick.bind(this, 555);
     this.home = this.home.bind(this);
     this.handelChange = this.handelChange.bind(this);
     this.handelChangepassword = this.handelChangepassword.bind(this);
@@ -127,28 +133,17 @@ class App extends Component {
         <header className="login-header">
           <img src={LOGOimg} alt="" style={logoimg} />
         </header>
-        <div
-          className="main"
-          style={{
-            backgroundImage:
-              "url(" + require("../../static/images/logobg.png") + ")"
-          }}
-        >
+
+        <div className="main" style={mainImage}>
           {/* <div onClick={onIncreaseClick}>
             登陆 {value}, {conut}
           </div> */}
           {/* <div onClick={this.home}>
             进入home页面
           </div> */}
-          {/* <div onClick={this.handleClick}>{this.state.isToggleOn}</div> */}
+
           <div className="loginlayer">
-            <div
-              className="left"
-              style={{
-                backgroundImage:
-                  "url(" + require("../../static/images/denglubg.png") + ")"
-              }}
-            >
+            <div className="left" style={dengluImage}>
               <img src={logobig} alt="" style={{ width: 298, height: 47 }} />
               <div className="linear-gradient" style={{ marginTop: 344 }}>
                 <canvas id="myCanvas" width="300" height="59">
@@ -186,7 +181,7 @@ class App extends Component {
                 <Input
                   placeholder="请输入密码"
                   type="password"
-                  onKeyDown={this.login}
+                  onKeyDown={e => (e.keyCode === 13 ? this.login() : "")}
                   onChange={this.handelChangepassword}
                   defaultValue={this.state.password}
                 />

@@ -3,6 +3,9 @@
   height: 100%;
   position: relative;
 }
+.scrollbar {
+  height: 100%;
+}
 .login-header {
   width: 100%;
   height: 60px;

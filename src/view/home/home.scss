@@ -1,0 +1,88 @@
+.home {
+  width: 100%;
+  height: 100%;
+  .scrollbar {
+    height: 100%;
+    .header {
+      width: 100%;
+      height: 60px;
+      font-size: 14px;
+      background: #181a1d;
+      display: flex;
+      justify-content: center;
+      color: white;
+      .header_content {
+        width: calc(100% - 108px);
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .header_vav {
+          width: 380px;
+          height: 25px;
+          display: flex;
+          margin-left: 100px;
+
+          .header_navlight {
+            margin-right: 38px;
+            cursor: pointer;
+            .mar_bottom {
+              margin-bottom: 5px;
+            }
+          }
+          .header_navlight:hover .line {
+            width: 9px;
+            height: 4px;
+            margin: 0 auto;
+            background-image: linear-gradient(90deg, #00ddf5 0%, #03fffb 100%);
+          }
+        }
+        .header_right {
+          width: 396px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .header_rctr {
+            color: #ffffff;
+            font-size: 16px;
+            width: 140px;
+            height: 40px;
+            background-image: linear-gradient(90deg, #23c5ff 0%, #2275fe 100%);
+            border-radius: 20px;
+            cursor: pointer;
+            border: 0px;
+          }
+          .popover_content_header {
+            width: 100%;
+            height: 98px;
+            padding: 25px 0px 0px 27px;
+            border-bottom: 2px solid #eeefef;
+
+            .popover_platform {
+              font-size: 14px;
+              color: #999999;
+              margin-right: 6px;
+            }
+            .popover_name {
+              color: #999999;
+              font-size: 12px;
+            }
+            .list {
+              width: 100%;
+              height: 53px;
+              padding-top: 17px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+    .main_content {
+      width: 100%;
+      height: 1380px;
+      position: relative;
+      background: red;
+    }
+  }
+}
