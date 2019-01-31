@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./home.scss";
 import LOGOimg from "@/static/images/LOGO.png";
 import logo3 from "@/static/images/logo3.png";
@@ -13,7 +14,20 @@ let popover_content = {
   opacity: 0.96,
   boxSizing: "border-box"
 };
-
+//状态管理 的state
+function mapState(state) {
+  return {
+    value: state.userInfo.name,
+    conut: state.conut
+  };
+}
+function mapDispatch(dispatch) {
+  return {
+    changval: function() {
+      dispatch({ type: "SET_USER_INFO", userInfo: "lishi111" });
+    }
+  };
+}
 class Home extends Component {
   // home页面
   constructor() {
@@ -43,9 +57,9 @@ class Home extends Component {
       visible: false
     });
   }
-   List() {
+  List() {
     const params = {};
-     axios("/page/identity/queryByUser", params, "POST").then(res => {
+    axios("/page/identity/queryByUser", params, "POST").then(res => {
       if (res.data.resultCode === "0000") {
         console.log(res);
         const upData = userProductList(res.data.data);
@@ -57,6 +71,7 @@ class Home extends Component {
     });
   }
   render() {
+    const { value, conut, changval } = this.props;
     return (
       <div className="home">
         <ScrollArea
@@ -138,11 +153,16 @@ class Home extends Component {
               </div>
             </div>
           </div>
-          <div className="main_content">gfdsgfd</div>
+          <div className="main_content" onClick={changval}>
+            {value},{conut}
+          </div>
         </ScrollArea>
       </div>
     );
   }
 }
 
-export default Home;
+export default connect(
+  mapState,
+  mapDispatch
+)(Home);

@@ -127,7 +127,7 @@ class App extends Component {
     });
   }
   render() {
-    // const { value, conut, onIncreaseClick } = this.props;
+    const { value, conut, onIncreaseClick } = this.props;
     return (
       <div className="login">
         <header className="login-header">
@@ -135,16 +135,10 @@ class App extends Component {
         </header>
 
         <div className="main" style={mainImage}>
-          {/* <div onClick={onIncreaseClick}>
-            登陆 {value}, {conut}
-          </div> */}
-          {/* <div onClick={this.home}>
-            进入home页面
-          </div> */}
-
           <div className="loginlayer">
             <div className="left" style={dengluImage}>
               <img src={logobig} alt="" style={{ width: 298, height: 47 }} />
+
               <div className="linear-gradient" style={{ marginTop: 344 }}>
                 <canvas id="myCanvas" width="300" height="59">
                   您的浏览器不支持 HTML5 canvas 标签。
@@ -159,7 +153,9 @@ class App extends Component {
             <div className="right">
               <div className="rightHeader">
                 <span style={{ color: "#b3b3b3" }}>用户</span>
-                <span style={{ color: "#2f2f2f" }}>登录</span>
+                <span style={{ color: "#2f2f2f" }} onClick={onIncreaseClick}>
+                  登录 {value}, {conut}
+                </span>
               </div>
               <div className="rightTittle">
                 Welcome Back,Please login to your account.
