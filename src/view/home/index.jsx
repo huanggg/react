@@ -6,7 +6,7 @@ import logo3 from "@/static/images/logo3.png";
 import ScrollArea from "react-scrollbar";
 import { Popover, Button } from "element-react";
 import axios from "@/axios/index";
-import { userProductList } from "@/util/fromat.js";
+// import { userProductList } from "@/util/fromat.js";
 let popover_content = {
   width: 270,
   height: 415,
@@ -49,18 +49,15 @@ class Home extends Component {
     // this.props.history.push({ pathname: "/center/" + "hello111" });
   }
   componentDidMount() {
-  
     console.log("父传的参数", this.props.name);
   }
-  onDismiss() {
-    
-  }
+  onDismiss() {}
   List() {
     const params = {};
     axios("/page/identity/queryByUser", params, "POST").then(res => {
       if (res.data.resultCode === "0000") {
         console.log(res);
-        const upData = userProductList(res.data.data);
+        // const upData = userProductList(res.data.data);
         // this.setState({
         //   popover_content_list_Atrr1: upData["1"],
         //   popover_content_list_Atrr2: upData["2"]

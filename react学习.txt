@@ -119,4 +119,37 @@ this.props.location.query.name
 this.props.history.push({pathname:"/path/" + name});
 
 读取参数用:this.props.match.params.name
+
+
+17 react 性能优化
+
+ 1 事件绑定
+  
+   this.handle=this.handle.bind(this)
+   handle(){
+    console.log(888)
+  }
  
+  <div onClick={this.handle}>事件触发</div>
+
+2 内联style样式
+
+ let headerStyle={
+     width:100px;
+     height:100px;
+  }
+
+  <div style={headerStyle}>样式优化</div>
+
+3 多组件优化
+  shouldComponentUpdate(nextProps.nextState){
+     if(nextProps.title===this.props.title){
+       return false;
+     }else{
+       return true;
+     }
+   
+   }
+4 reselect 优化
+
+  npm install reselect

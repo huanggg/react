@@ -1,0 +1,361 @@
+<template>
+  <div style="position:relative;width:100%;height:100%;">
+    <el-scrollbar style="height:100%;width: 100%">
+      <el-table
+        :data="formatData"
+        :row-style="showRow"
+        v-bind="$attrs"
+        stripe
+        border
+        highlight-current-row
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+      >
+        <el-table-column v-if="columns.length===0" width="150" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span v-for="space in scope.row._level" :key="space" class="ms-tree-space"/>
+            <span
+              v-if="iconShow(0,scope.row)"
+              class="tree-ctrl"
+              @click="toggleExpanded(scope.$index)"
+            >
+              <i v-if="!scope.row._expanded" class="el-icon-caret-right"/>
+              <i v-else class="el-icon-caret-bottom"/>
+            </span>
+            {{ scope.$index }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-for="(column, index) in columns"
+          v-else
+          :key="column.value"
+          :label="column.text"
+          :width="column.width"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <span
+              v-for="space in scope.row._level"
+              v-if="index === 0"
+              :key="space"
+              class="ms-tree-space"
+            />
+            <span
+              v-if="iconShow(index,scope.row)"
+              class="tree-ctrl"
+              @click="toggleExpanded(scope.$index)"
+            >
+              <!-- 图标 -->
+              <i v-if="!scope.row._expanded" class="el-icon-caret-right"/>
+              <i v-else class="el-icon-caret-bottom"/>
+            </span>
+            <!-- 第四列显示的数据 -->
+            <span
+              v-if="index==3&&typedata==1"
+              style="color: #2584ff;  cursor: pointer; display: inline-block;width:100%"
+              @click="layershow2(true,1,scope.row)"
+            >{{ scope.row[column.value] }}</span>
+            <!-- 第四列显示的数据 -->
+            <span
+              v-else-if="index==1&&typedata==2"
+              style="color: #2584ff;  cursor: pointer; display: inline-block;width:100%"
+              @click="layershow2(true,2,scope.row)"
+            >{{ scope.row[column.value]}}</span>
+            <span
+              v-else-if="index==2&&typedata==2"
+            >{{ scope.row[column.value] == '0' ? '否':scope.row[column.value] == '1' ? '是':''}}</span>
+            <!-- 第四列显示的数据 -->
+            <span
+              v-else-if="index==3&&typedata==0"
+              style="color: #2584ff;  cursor: pointer; display: inline-block;width:100%"
+              @click="layershow2(true,3,scope.row)"
+            >{{ scope.row[column.value] }}</span>
+            <!-- 第6列显示关系设置的数据 -->
+            <span
+              v-else-if="index==5&&typedata==1"
+              style="color: #2584ff;  cursor: pointer; display: inline-block;width:100%"
+              @click="Relationshipset(scope.row)"
+            >{{ scope.row[column.value]==3 ? '关系设置': ''}}</span>
+            <!-- 第6列显示关系设置的数据 -->
+            <!-- 第6列显示关系调整的数据 -->
+            <span
+              v-else-if="index==4&&typedata==2"
+              style="color: #2584ff;  cursor: pointer; display: inline-block;width:100%"
+              @click="RelationshipAdjust(scope.row)"
+            >{{ scope.row[column.value]==3 ? '关系调整': ''}}</span>
+            <!-- 第6列显示关系调整的数据 -->
+            <!-- 每列的数据 -->
+            <span v-else-if="index==8&&typedata==4">
+              {{ scope.row[column.value] == '0' ? '未提报':
+              scope.row[column.value] == '1' ? '已提报':
+              scope.row[column.value] == '2' ? '未达成':
+              scope.row[column.value] == '3' ? '达成' :
+              scope.row[column.value] == '4' ?'已完成':''
+              }}
+            </span>
+            <span v-else-if="index==3&&typedata==4">{{scope.row[column.value]|formatDate}}</span>
+            <span v-else-if="index==4&&typedata==4">{{scope.row[column.value]|formatDate}}</span>
+            <span v-else-if="index==5&&typedata==4">{{scope.row[column.value]|formatDate}}</span>
+            <span v-else-if="index==6&&typedata==4">{{scope.row[column.value]|formatDate}}</span>
+            <span v-else>{{ scope.row[column.value] }}</span>
+          </template>
+        </el-table-column>
+        <slot/>
+      </el-table>
+    </el-scrollbar>
+    <!-- 匠心工序与模型构件关系弹出层-->
+    <div v-if="showlayer==1" class="Advancedsearch11">
+      <OriginalityRelationeNum @layerhidden="layerhidden" :data="rowdata"></OriginalityRelationeNum>
+    </div>
+    <!-- 匠心工序与模型构件关系弹出层-->
+    <!-- 项目关系详情弹出层-->
+    <div v-if="showlayer==2" class="Advancedsearch22">
+      <ProjectrelationshipNum
+        @layerhidden="layerhidden"
+        :data="rowdata"
+        :sourcedata="sourcedatay"
+        style
+      ></ProjectrelationshipNum>
+    </div>
+    <!-- 项目关系详情弹出层-->
+    <!-- 标准关系弹出层-->
+    <div v-if="showlayer==3" class="Advancedsearch11">
+      <StandardrelationNum @layerhidden="layerhidden" :data="rowdata"></StandardrelationNum>
+    </div>
+    <!-- 标准关系弹出层-->
+  </div>
+</template>
+<script>
+import moment from 'moment'
+/**
+  Auth: Lei.j1ang
+  Created: 2018/1/19-13:59
+*/
+import treeToArray from '@/util/eval'
+import OriginalityRelationeNum from '@/view/Datamanagement/DataRuleMana/OriginalityRelationeNum'
+import ProjectrelationshipNum from '@/view/Datamanagement/DataApplicationMana/ProjectrelationshipNum'
+import StandardrelationNum from '@/view/Datamanagement/DataApplicationMana/StandardrelationNum'
+
+export default {
+  name: 'TreeTable',
+  data () {
+    return {
+      showlayer: 8888,
+      search: '',
+      rowdata: ''
+    }
+  },
+  props: {
+    /* eslint-disable */
+    data: {
+      type: [Array, Object],
+      required: true
+    },
+    typedata: '',
+    loading: {
+      type: Boolean,
+      default: true
+    },
+    columns: {
+      type: Array,
+      default: () => []
+    },
+    sourcedatay: {
+      type: Object,
+
+    },
+    evalFunc: Function,
+    evalArgs: Array,
+    expandAll: {
+      type: Boolean,
+      default: false
+    }
+  },
+  filters: {
+    formatDate: function (val) {
+      let time = ''
+      if (val) {
+        time = moment(Number(val)).format('YYYY-MM-DD');
+      } else {
+        time = ''
+      }
+      return time
+    }
+  },
+  mounted () {
+    console.log('sourcedatay', this.sourcedatay)
+
+  },
+  computed: {
+    // 格式化数据源
+    formatData: function () {
+      let tmp;
+      if (!Array.isArray(this.data)) {
+        tmp = [this.data];
+      } else {
+        tmp = this.data;
+      }
+      const func = this.evalFunc || treeToArray;
+      const args = this.evalArgs
+        ? Array.concat([tmp, this.expandAll], this.evalArgs)
+        : [tmp, this.expandAll];
+      return func.apply(null, args);
+    }
+  },
+  components: {
+    OriginalityRelationeNum,
+    ProjectrelationshipNum,
+    StandardrelationNum
+  },
+  methods: {
+    layershow2 (boleen, num, row) {
+      // 弹出蒙层的方法
+      this.showlayer = num
+      this.$store.commit('changelayershow2', { boleen: boleen })
+      console.log(row)
+      // 表格当前行的数据
+      this.rowdata = row
+    },
+    layerhidden (num) {
+      this.showlayer = num
+    },
+    showRow: function (row) {
+      const show = row.row.parent
+        ? row.row.parent._expanded && row.row.parent._show
+        : true;
+      row.row._show = show;
+      return show
+        ? 'animation:treeTableShow 0s;-webkit-animation:treeTableShow 0s;'
+        : 'display:none;';
+    },
+    // 切换下级是否展开
+    toggleExpanded: function (trIndex) {
+      const record = this.formatData[trIndex];
+      record._expanded = !record._expanded;
+      console.log(record)
+      //  第一层点击调接口
+      // if (record._level === 1) {   
+      //   record.children = [   
+      //     {
+
+      //       Processnode: '土建12',
+      //       id: 1,
+      //       source: 100,
+      //       UpdateTime: '无',
+      //       children: [
+      //         {
+      //           Processnode: '土建',
+      //           id: 1,
+      //           source: 100,
+      //           UpdateTime: '无',
+      //         }
+      //       ]
+      //     },          
+      //   ]
+      // }
+      //  第二层点击调接口
+      // if (record._level === 2) {   
+      //   record.children = [  
+      //     {
+      //       Processnode: '土建',
+      //       id: 1,
+      //       source: 100,
+      //       UpdateTime: '无',
+      //       children: [
+      //         {
+      //           Processnode: '土建',
+      //           id: 1,
+      //           source: 100,
+      //           UpdateTime: '无',
+      //         }
+      //       ]
+      //     }
+      //   ]
+      // }
+    },
+    // 图标显示
+    iconShow (index, record) {
+      return index === 0 && record.children && record.children.length > 0;
+    },
+    // 关系设置
+    Relationshipset (rowdata) {
+      console.log('888888844141000', rowdata)
+      this.$router.push({ name: 'Relationset', params: { data: rowdata } })
+    },
+    // 关系调整
+    RelationshipAdjust (rowdata) {
+      console.log(this.sourcedatay)
+      this.$router.push({ name: 'Relationshipadjust', params: { data: rowdata, sourcedata: this.sourcedatay } })
+    }
+  }
+};
+</script>
+<style rel="stylesheet/css">
+@keyframes treeTableShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes treeTableShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+</style>
+ 
+<style scoped>
+.ms-tree-space {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  width: 18px;
+  height: 14px;
+}
+.ms-tree-space::before {
+  content: "";
+}
+.processContainer {
+  width: 100%;
+  height: 100%;
+}
+
+table td {
+  line-height: 26px;
+}
+.tree-ctrl {
+  position: relative;
+  cursor: pointer;
+  color: #2196f3;
+  margin-left: -18px;
+}
+.Advancedsearch11 {
+  width: 95%;
+  height: 515px;
+  background: white;
+  border-radius: 6px;
+  position: absolute;
+  left: 0%;
+  top: -34%;
+  z-index: 100;
+}
+.Advancedsearch22 {
+  width: 95%;
+  height: 600px;
+  background: white;
+  border-radius: 6px;
+  position: absolute;
+  left: 0%;
+  top: -38%;
+  z-index: 100;
+}
+</style>

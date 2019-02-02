@@ -1,0 +1,74 @@
+﻿
+total可以理解为一个临时的初始变量，该初始变量有两种情况：
+
+当reduce()函数没有传入initiaValue值时，该参数为数组的第一个元素，currentIndex为数组的第二个元素
+当reduce()函数传入initiaValue值时，该参数为initiaValue值，currentIndex为数组的第一个元素
+
+let array = [1, 2, 3, 4];
+
+let temp = array.reduce((x, y) => {
+
+　　console.log("x": x);
+
+　　console.log("y": y);
+
+　　return x + y;
+
+});
+
+console.log(temp);　　// 10
+
+console.log(array);　　// [1, 2, 3, 4]
+
+// x 是上一次计算过的值, 第一次循环的时候是数组中的第1个元素
+
+// y 是数组中的每个元素, 第一次循环的时候是数组的第2个元素
+
+["apple","orange"].reduce(function(total, value){
+    console.log("total:", total);
+    console.log("value:", value);
+    total[value] = 1;
+    return total;
+  },{});
+
+// total: {}       //因为 reduce(callback,{})函数的initiaValue为{}，所以total值为initiaValue值
+// value: apple    //value值为数组的第一个元素
+// total: {apple: 1}
+// value: orange
+// {apple: 1, orange: 1}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/static/images/title.png" />
+    <script
+      type="text/javascript"
+      src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"
+    ></script>
+
+    <title>共享中心</title>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <div id="cnzz" style="display: none;">
+      <!-- 测试 -->
+      <script src="https://s23.cnzz.com/z_stat.php?id=1275868630&web_id=1275868630" language="JavaScript"></script>
+      <!-- 正式 -->
+      <script src="https://s96.cnzz.com/z_stat.php?id=1275869624&web_id=1275869624" language="JavaScript"></script>
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+  <style>
+    /* 解决el-table 表头错位问题 */
+    body .el-table th.gutter {
+      display: table-cell !important;
+    }
+
+    body .el-table colgroup.gutter {
+      display: table-cell !important;
+    }
+  </style>
+</html>

@@ -1,0 +1,38 @@
+ <NodepoolTreetable
+        :data="data"
+        :columns="columns"
+        :expandAll="isexpandAll"
+        :loading="isloading"
+        :typedata="1"
+      />
+
+ // 头部数据
+      columns: [
+        {
+          text: '工序节点',
+          value: 'nodeName',
+          width: 200,
+        },
+        {
+          text: 'ID',
+          value: 'poolId'
+        },
+        {
+          text: '来源',
+          value: 'source'
+        },
+        {
+          text: '已关联构件数量(个)',
+          value: 'relTotal'
+        },
+        {
+          text: '更新时间',
+          value: 'updateTime'
+        },
+        // {
+        //   text: '操作',
+        //   value: 'level'
+        // }
+      ],
+      // 页面进入调一级接口
+      data: [],

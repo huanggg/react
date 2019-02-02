@@ -1,0 +1,40 @@
+   // 点击结构树时的事件
+    loadNode (node, resolve) {
+      const params = {
+        buildNo: node.data.innerNo,
+        floorNo: node.data.innerNo,
+        menuType: 'DATA'
+      }
+      if (node.level >= 3) { return resolve([]) }
+      if (node.data.type === 'BUILD') {
+        if (node.data.children) {
+          // 结构树楼层接口
+          axios('/page/project/floor/list', params, 'POST').then(res => {
+            if (res.data.resultCode === '0000') {
+              node.data.children = res.data.data
+              node.data.children.forEach(item => {
+                item.icon = require('static/images/icon-1.png')
+              })
+              if (node.level === 1) {
+                return resolve(node.data.children)
+              }
+            }
+          })
+        }
+      }
+      // 结构树房间接口
+      if (node.data.type === 'FLOOR') {
+        axios('/page/project/room/list', params, 'POST').then(res => {
+          if (res.data.resultCode === '0000') {
+            node.data.children = res.data.data
+            node.data.children.forEach(arritem => {
+              arritem.icon = require('static/images/icon-2.png')
+              arritem.leaf = true
+            })
+            if (node.level === 2) {
+              return resolve(node.data.children)
+            }
+          }
+        })
+      }
+    },

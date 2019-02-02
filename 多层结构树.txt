@@ -1,0 +1,36 @@
+// 结构树 js
+export function treeContruct (list, type) {
+  const tree = []
+  const tree2 = []
+  const a = function (data) {
+    for (const i of data) {
+      if (i.checked) {
+        if (i.chirlds && i.chirlds.length) {
+          a(i.chirlds)
+        } else {
+          tree.push(i.id)
+        }
+        tree2.push(i.id)
+      }
+    }
+  }
+  a(list)
+  return type ? tree2 : tree
+}
+
+------------------------------------
+  // 拉取结构树
+    List () {
+      const params = {
+        // roleId: sessionStorage.getItem('produclisttId'),
+        roleId: this.data.id,
+        'productId': JSON.parse(sessionStorage.getItem('datatype')).productId
+      }
+      this.$http('/page/product/queryRoleRelMenu', params, 'POST').then(res => {
+        if (res.data.resultCode === '0000') {
+          this.default_checked_keys = treeContruct(res.data.data.list)
+          this.default_expanded_keys = treeContruct(res.data.data.list, 1)
+          this.AddRoles = treeStatus(res.data.data.list)
+        }
+      })
+    },
