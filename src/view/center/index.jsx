@@ -21,11 +21,11 @@ const Zhuanlan = () => (
 class Center extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: 1111
+    };
   }
-  componentWillMount() {
-    this.List();
-  }
+  componentWillMount() {}
   componentDidMount() {
     console.log("路由传递过来的参数", this.props.location.query.name);
     // console.log("路由传递过来的参数", this.props.location.pathname);

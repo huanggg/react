@@ -1,0 +1,121 @@
+
+  vue——项目优化，缩短首屏加载时间
+
+ 1 代码包优化
+
+  1-1 屏蔽sourceMap 
+    config目录 index下 在build对象中的配置信息中，productionSourceMap修改成false:
+    压缩代码并移除console
+    webpack.prod.conf.js下
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          warnings: false,
+          drop_debugger: true,
+          drop_console: true
+        }
+      },
+
+   
+
+  1-2 对路由组件进行懒加载 
+
+    component: resolve=>require(["@/views/home"],resolve)
+
+  1-3 对项目代码中的JS/CSS/SVG(*.ico)文件进行gzip压缩
+
+2 源码优化
+
+  2-1 v-if he v-show  的选择调用
+      v-show和v-if的区别是：v-if是懒加载，当状态为true时才会加载，并且为false时不
+      会占用布局空间；v-show是无论状态是true或者是false，都会进行渲染，并对布局
+      占据空间对于在项目中，需要频繁调用，不需要权限的显示隐藏，可以选择使用v-
+      show，可以减少系统的切换开销。
+  2-2 为item设置唯一key值，
+      在列表渲染时，为每一项item设置唯一的key值，方便
+      vuejs 内部机制精准找到该条列表数据。当state更新时，
+      新的状态值和旧的状态值对比，较快地定位到diff。
+     
+  2-3 细分vuejs组件
+      在项目开发过程之中，第一版本把所有的组件的布局写在一个组件中，当数据变更
+      时，由于组件代码比较庞大，vuejs的数据驱动视图更新比较慢，造成渲染比较
+      慢。造成比较差的体验效果。所以把组件细分，比如一个组件，可以把整个组件细
+      分成轮播组件、列表组件、分页组件等。
+
+  2-4 减少watch的数据
+      当组件某个数据变更后需要对应的state进行变更，就需要对另外的组件进行state
+      进行变更。可以使用watch监听相应的数据变更并绑定事件。当watch的数据比较
+      小，性能消耗不明显。当数据变大，系统会出现卡顿，所以减少watch的数据。其
+      它不同的组件的state双向绑定，可以采用事件中央总线或者vuex进行数据的变更操作。
+
+  2-5 内容类系统的图片资源按需加载
+
+      对于内容类系统的图片按需加载，如果出现图片加载比较多，可以先使用v-lazy之
+      类的懒加载库或者绑定鼠标的scroll事件，滚动到可视区域先再对数据进行加载显
+      示，减少系统加载的数据
+
+3.用户体验优化
+
+4 其它优化
+
+  4-1 菊花loading
+
+  4-2 浏览器缓存机制。
+
+  4-3 element-ui 按需加载组件
+
+  4-4 使用cdn 
+ 
+
+
+vue单页面通过prerender-spa-plugin插件进行SEO优化
+
+Vue打包文件放在服务器，浏览器存在缓存问题的解决
+
+  解决方法：找到webpack .prod.conf.js
+
+   1.定义版本变量： const  Version = new Date().getTime(); // 这里使用的是时间戳 来区分 ，也可以自己定义成别的如：1.1
+
+   2.修改要生成的js和css文件的配置项，把刚刚声明的版本拼接进要生成的文件名中；
+
+   output: {
+
+        path: config.build.assetsRoot,
+
+         filename: utils.assetsPath('js/[name].[chunkhash].' + Version + '.js'),
+
+        chunkFilename: utils.assetsPath('js/[id].[chunkhash].' + Version + '.js')
+
+    },
+
+  然后直接 npm run build 打包后 就可以看到dist 文件里的js 文件名带上里版本号
+
+3 js 数据结构与算法
+   
+4 js 设计模式
+  
+5 vuex 状态管理
+ 
+6 router 路由
+
+7 vue响应式原理
+ 
+8 vuejs 的生命周期
+
+9 mvvm 的理解
+  
+10 vue父子组件的数据传递
+ 
+11 git 的常用命令
+  
+12 Vue中观察者模式介绍
+
+13 递归
+
+14 webpack 配置vuejs项目
+
+
+15 前端的基础知识
+
+16 http 工作原理
+ 

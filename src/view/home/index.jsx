@@ -49,13 +49,11 @@ class Home extends Component {
     // this.props.history.push({ pathname: "/center/" + "hello111" });
   }
   componentDidMount() {
-    this.List();
+  
     console.log("父传的参数", this.props.name);
   }
   onDismiss() {
-    this.setState({
-      visible: false
-    });
+    
   }
   List() {
     const params = {};
@@ -63,10 +61,10 @@ class Home extends Component {
       if (res.data.resultCode === "0000") {
         console.log(res);
         const upData = userProductList(res.data.data);
-        this.setState({
-          popover_content_list_Atrr1: upData["1"],
-          popover_content_list_Atrr2: upData["2"]
-        });
+        // this.setState({
+        //   popover_content_list_Atrr1: upData["1"],
+        //   popover_content_list_Atrr2: upData["2"]
+        // });
       }
     });
   }
