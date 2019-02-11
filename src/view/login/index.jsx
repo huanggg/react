@@ -98,34 +98,40 @@ class App extends Component {
       userAccount: aes.Encrypt(this.state.username.trim()),
       password: aes.Encrypt(this.state.password.trim())
     };
-    // /release/page/login
-    await axios("/release/page/login", params, "POST").then(res => {
-      if (res.data.resultCode === "0000") {
-        console.log("99999", res);
-        sessionStorage.setItem(
-          "tokenKey",
-          JSON.stringify(res.data.data.tokenValue)
-        );
-        sessionStorage.setItem(
-          "userName",
-          JSON.stringify(res.data.data.userName)
-        );
-        sessionStorage.setItem(
-          "userAccount",
-          JSON.stringify(res.data.data.userAccount)
-        );
-        if (sessionStorage.getItem("tokenKey")) {
-          this.props.history.push("/home");
+    await axios
+      .post("/release/page/login", params)
+      .then(res => { 
+        if (res.data.resultCode === "0000") {
+          console.log("99999", res);
+          sessionStorage.setItem(
+            "tokenKey",
+            JSON.stringify(res.data.data.tokenValue)
+          );
+          sessionStorage.setItem(
+            "userName",
+            JSON.stringify(res.data.data.userName)
+          );
+          sessionStorage.setItem(
+            "userAccount",
+            JSON.stringify(res.data.data.userAccount)
+          );
+          if (sessionStorage.getItem("tokenKey")) {
+            console.log(122222);
+             this.props.history.push("/home");         
+          }
+        } else {
+          Message({
+            message: "用户名,密码错误",
+            type: "error",
+            duration: 1000
+          });
         }
-      } else {
-        Message({
-          message: "用户名,密码错误",
-          type: "error",
-          duration: 1000
-        });
-      }
-    });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
+
   render() {
     const { value, conut, onIncreaseClick } = this.props;
     return (

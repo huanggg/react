@@ -5,7 +5,7 @@ import LOGOimg from "@/static/images/LOGO.png";
 import logo3 from "@/static/images/logo3.png";
 import ScrollArea from "react-scrollbar";
 import { Popover, Button } from "element-react";
-import axios from "@/axios/index";
+import axios from "axios";
 // import { userProductList } from "@/util/fromat.js";
 let popover_content = {
   width: 270,
@@ -50,19 +50,13 @@ class Home extends Component {
   }
   componentDidMount() {
     console.log("父传的参数", this.props.name);
+    this.List();
   }
   onDismiss() {}
   List() {
     const params = {};
-    axios("/page/identity/queryByUser", params, "POST").then(res => {
-      if (res.data.resultCode === "0000") {
-        console.log(res);
-        // const upData = userProductList(res.data.data);
-        // this.setState({
-        //   popover_content_list_Atrr1: upData["1"],
-        //   popover_content_list_Atrr2: upData["2"]
-        // });
-      }
+    axios.post("/page/identity/queryByUser", params).then(res => {
+      console.log(res);
     });
   }
   render() {
