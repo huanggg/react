@@ -87,4 +87,75 @@ Vue的双向数据绑定原理是什么？（vue响应式原理？）
 4、vue如何实现父子组件通信，以及非父子组件通信？
 5、vuejs与angularjs以及react的区别？
 6、vuex是用来做什么的？
+7、js 的栈内存与堆内存
 
+  实现深拷贝
+
+方式一
+
+当值为undefined、function、symbol 会在转换过程中被忽略。。。
+所以，对象值有这三种的话用这种方法会导致属性丢失。
+ function deepClone(obj){
+    let _obj = JSON.stringify(obj),
+        objClone = JSON.parse(_obj);
+    return objClone
+}    
+let a=[0,1,[2,3],4],
+    b=deepClone(a);
+a[0]=1;
+a[2][0]=1;
+console.log(a,b);
+
+
+方式二 
+function deepClone(obj){
+    let objClone = Array.isArray(obj)?[]:{};
+    if(obj && typeof obj==="object"){
+        for(key in obj){
+            if(obj.hasOwnProperty(key)){
+                //判断ojb子元素是否为对象，如果是，递归复制
+                if(obj[key]&&typeof obj[key] ==="object"){
+                    objClone[key] = deepClone(obj[key]);
+                }else{
+                    //如果不是，简单复制
+                    objClone[key] = obj[key];
+                }
+            }
+        }
+    }
+    return objClone;
+}    
+let a=[1,2,3,4],
+    b=deepClone(a);
+a[0]=2;
+console.log(a,b);
+
+
+8 递归
+9 闭包
+10 js 去重方法
+
+方法一
+
+  let arr = [1,2,3,3];
+  let resultarr = [...new Set(arr)]; 
+  console.log(resultarr); //[1,2,3]
+
+
+方法二
+
+function uniq(array){
+    var temp = []; //一个新的临时数组
+    for(var i = 0; i < array.length; i++){
+        if(temp.indexOf(array[i]) == -1){
+            temp.push(array[i]);
+        }
+    }
+    return temp;
+}
+
+var aa = [1,2,2,4,9,6,7,5,2,3,5,6,5];
+console.log(uniq(aa))
+
+
+11 vue 插件写法与发布

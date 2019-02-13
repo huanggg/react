@@ -19,7 +19,7 @@ axios.interceptors.request.use(
       : "";
     if (token) {
       // config.headers['X-YAuth-Token'] = token
-      config.headers["Authorization"] = token;
+      config.headers["Authorization"] = JSON.parse(token);
       console.log(token);
     }
     return config;
