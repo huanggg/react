@@ -1,0 +1,48 @@
+1 Auto Close Tag
+
+2 Chinese (Simplified) Language Pack for Visual Studio Code
+
+3 Color Highlight
+
+4 Color Picker
+
+5 Git History
+
+6 open in browser
+
+7 Path Autocomplete
+
+8 Prettier - Code formatter
+
+9 Project Manager
+
+10 vetur
+
+{
+  "editor.minimap.enabled": false,
+  "files.autoSave": "afterDelay",
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+  "open-in-browser.default": "\"open-in-browser.default\": \"Chrome\"",
+  "window.zoomLevel": 0,
+  "vetur.format.defaultFormatter.js": "vscode-typescript",
+  "vetur.format.defaultFormatter.html": "prettyhtml",
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": {},
+    "prettyhtml": {
+      "printWidth": 100,
+      "singleQuote": false
+    }
+  },
+  "editor.tabSize": 2,
+  "editor.useTabStops": false,
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "prettier.singleQuote": false,
+  "prettier.semi": true,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.fontSize": 16,
+  "workbench.colorTheme": "Monokai"
+}

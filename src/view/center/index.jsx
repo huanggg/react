@@ -25,7 +25,11 @@ class Center extends Component {
       name: 1111
     };
   }
-  componentWillMount() {}
+  omponentWillUnmount(){
+    this.setState = (state,callback)=>{
+    return;
+  };
+  }
   componentDidMount() {
     console.log("路由传递过来的参数", this.props.location.query.name);
     // console.log("路由传递过来的参数", this.props.location.pathname);

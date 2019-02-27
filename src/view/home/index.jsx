@@ -52,11 +52,18 @@ class Home extends Component {
     console.log("父传的参数", this.props.name);
     this.List();
   }
+  omponentWillUnmount(){
+    this.setState = (state,callback)=>{
+    return;
+  };
+  }
   onDismiss() {}
   List() {
     const params = {};
     axios.post("/page/identity/queryByUser", params).then(res => {
-      console.log(res);
+      if (res.data.resultCode === "0000") {
+        console.log(res);
+      }
     });
   }
   render() {

@@ -118,4 +118,6 @@ Vue打包文件放在服务器，浏览器存在缓存问题的解决
 15 前端的基础知识
 
 16 http 工作原理
+
+17 vue 全屏插件 https://mirari.cc/vue-fullscreen/
  
