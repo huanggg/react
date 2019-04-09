@@ -32,8 +32,8 @@ $ npm start
 8 react-router-dom 的使用 
 
 9 使用 elementUi 
-  $  npm i element-react --save
-  $ npm install element-theme-default --save
+  $  cnpm i element-react --save
+  $ cnpm install element-theme-default --save
 
    aes加密
 10 npm install crypto-js --save-dev
