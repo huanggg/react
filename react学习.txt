@@ -1,63 +1,63 @@
-1 ´´½¨¹¤³ÌÏîÄ¿
+1 åˆ›å»ºå·¥ç¨‹é¡¹ç›®
 
 $ cnpm install -g create-react-app
 $ create-react-app my-app
 $ cd my-app/
 $ npm start
 
-2 ±©Â¶config ÎÄ¼ş -> npm run eject (¿ÉÄÜÒªÏÈgit commit -m '³õÊ¼»¯')
+2 æš´éœ²config æ–‡ä»¶ -> npm run eject (å¯èƒ½è¦å…ˆgit commit -m 'åˆå§‹åŒ–')
 
-3 °²×° react-router-dom 
+3 å®‰è£… react-router-dom 
 
   $ npm install react-router --save react-router-dom
 
-4 °²×°×´Ì¬¹ÜÀí store 
+4 å®‰è£…çŠ¶æ€ç®¡ç† store 
  
   $ npm install --save redux
   $ npm install --save react-redux
   
  cnpm install axios --save
 
-5 ´ò°ü
+5 æ‰“åŒ…
 
- $ npm run build (¿ÉÄÜ´æÔÚes6Î´ÄÜÕıÈ·×ª»¯Îªes5µÄ´íÎó)
+ $ npm run build (å¯èƒ½å­˜åœ¨es6æœªèƒ½æ­£ç¡®è½¬åŒ–ä¸ºes5çš„é”™è¯¯)
 
-6 ÒıÈë <script
+6 å¼•å…¥ <script
       type="text/javascript"
       src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"
     ></script>
 
-7 ½áºÏReactÊ¹ÓÃRedux
+7 ç»“åˆReactä½¿ç”¨Redux
 
-8 react-router-dom µÄÊ¹ÓÃ 
+8 react-router-dom çš„ä½¿ç”¨ 
 
-9 Ê¹ÓÃ elementUi 
+9 ä½¿ç”¨ elementUi 
   $  cnpm i element-react --save
   $ cnpm install element-theme-default --save
 
-   aes¼ÓÃÜ
+   aesåŠ å¯†
 10 npm install crypto-js --save-dev
 
-   ÅäÖÃ¾ø¶ÔÂ·¾¶
+   é…ç½®ç»å¯¹è·¯å¾„
 11  alias: {     
         "react-native": "react-native-web",
         "@": path.resolve(__dirname, "../src")      
       },
 
-  package.json ÎÄ¼şÖĞÅäÖÃ´úÀí
+  package.json æ–‡ä»¶ä¸­é…ç½®ä»£ç†
 
 12 "proxy": "http://bptest.vanke.com",
 
 
-13  ¼üÅÌÊÂ¼ş
+13  é”®ç›˜äº‹ä»¶
 
   onKeyDown={e=> console.log( e.keyCode ) }
  
-14 ¹ö¶¯Ìõ npm install react-scrollbar --save
+14 æ»šåŠ¨æ¡ npm install react-scrollbar --save
 
-15 ¸¸×Ó×é¼ş´«µİ²ÎÊı
+15 çˆ¶å­ç»„ä»¶ä¼ é€’å‚æ•°
 
-   // ×Ó×é¼ş
+   // å­ç»„ä»¶
 import React, { Component } from "react";
 class Child extends Component {
   constructor(props) {
@@ -65,7 +65,7 @@ class Child extends Component {
     this.state = {};
   }
   handle () { 
-    // Íù¸¸×é¼ş´«µİÒ»¸ö¶ÔÏó²ÎÊı,×Ó×é¼ş´¥·¢Ò»¸ö×Ô¶¨ÒåÊÂ¼ş
+    // å¾€çˆ¶ç»„ä»¶ä¼ é€’ä¸€ä¸ªå¯¹è±¡å‚æ•°,å­ç»„ä»¶è§¦å‘ä¸€ä¸ªè‡ªå®šä¹‰äº‹ä»¶
     this.props.uphandle({
       name:'zhangsan'
     })
@@ -81,7 +81,7 @@ class Child extends Component {
 
 export default Child
 
-   // ¸¸×é¼ş
+   // çˆ¶ç»„ä»¶
 
 import React, { Component } from "react";
 import Child from '@/view/child/index.jsx'
@@ -91,13 +91,13 @@ class Parent extends Component {
     this.state = {};
   }
   handle (obj) { 
-    // Íù¸¸×é¼ş´«µİÒ»¸ö¶ÔÏó²ÎÊı
+    // å¾€çˆ¶ç»„ä»¶ä¼ é€’ä¸€ä¸ªå¯¹è±¡å‚æ•°
    console.log(obj)
   }
   render() {
     return (
       <div className="parent">
-      {/* ¸¸×é¼ş¼àÌı×Ó×é¼ş´¥·¢µÄ×Ô¶¨ÒåÊÂ¼ş */}
+      {/* çˆ¶ç»„ä»¶ç›‘å¬å­ç»„ä»¶è§¦å‘çš„è‡ªå®šä¹‰äº‹ä»¶ */}
         <Child name='hello child' uphandle={this.handle.bind(this)} />
       </div>
     );
@@ -107,41 +107,67 @@ class Parent extends Component {
 export default Parent 
 
 
-16 react-router-dom 4.xxx°æ±¾ Â·ÓÉÌø×ª²¢´«²Î
-È±µã£ºË¢ĞÂµØÖ·À¸£¬²ÎÊı¶ªÊ§
+16 react-router-dom 4.xxxç‰ˆæœ¬ è·¯ç”±è·³è½¬å¹¶ä¼ å‚
+ç¼ºç‚¹ï¼šåˆ·æ–°åœ°å€æ ï¼Œå‚æ•°ä¸¢å¤±
 
-js Ìø×ª : this.props.history.push({pathname:"/query",query: { name : 'sunny' }});
+js è·³è½¬ : this.props.history.push({pathname:"/query",query: { name : 'sunny' }});
 this.props.location.query.name
 
 
 
-ÓÅÊÆ £º Ë¢ĞÂµØÖ·À¸£¬²ÎÊıÒÀÈ»´æÔÚ
+ä¼˜åŠ¿ ï¼š åˆ·æ–°åœ°å€æ ï¼Œå‚æ•°ä¾ç„¶å­˜åœ¨
 this.props.history.push({pathname:"/path/" + name});
 
-¶ÁÈ¡²ÎÊıÓÃ:this.props.match.params.name
+è¯»å–å‚æ•°ç”¨:this.props.match.params.name
+å­è·¯ç”±ï¼š
 
+ <Router>
+                <div>
+                    <li>
+                        <Link to={`${this.props.match.url}/1?a=${this.state.firstNumber}`}
+                              onClick={() => {
+                                  console.log('Link æ ‡ç­¾ï¼ˆè·³è½¬åˆ°/1ï¼‰çš„ onClick äº‹ä»¶', this.props.location)
+                              }}>
+                            ç¤ºä¾‹1
+                        </Link>
+                        <input type="text" value={this.state.firstNumber} onChange={this.changeFirst}/>
+                    </li>
+                    <li>
+                        <Link to={`${this.props.match.url}/2/${this.state.secondNumber}`}
+                              onClick={() => {
+                                  console.log('Link æ ‡ç­¾ï¼ˆè·³è½¬åˆ°/2ï¼‰çš„ onClick äº‹ä»¶', this.props.location)
+                              }}>
+                            ç¤ºä¾‹2
+                        </Link>
+                        <input type="text" value={this.state.secondNumber} onChange={this.changeSecond}/>
+                    </li>
+                    <hr/>
 
-17 react ĞÔÄÜÓÅ»¯
+                    <Route path={`${this.props.match.url}/1`} component={First}/>
+                    <Route path={`${this.props.match.url}/2/:myParams`} component={Second}/>
+                </div>
+            </Router>
+17 react æ€§èƒ½ä¼˜åŒ–
 
- 1 ÊÂ¼ş°ó¶¨
+ 1 äº‹ä»¶ç»‘å®š
   
    this.handle=this.handle.bind(this)
    handle(){
     console.log(888)
   }
  
-  <div onClick={this.handle}>ÊÂ¼ş´¥·¢</div>
+  <div onClick={this.handle}>äº‹ä»¶è§¦å‘</div>
 
-2 ÄÚÁªstyleÑùÊ½
+2 å†…è”styleæ ·å¼
 
  let headerStyle={
      width:100px;
      height:100px;
   }
 
-  <div style={headerStyle}>ÑùÊ½ÓÅ»¯</div>
+  <div style={headerStyle}>æ ·å¼ä¼˜åŒ–</div>
 
-3 ¶à×é¼şÓÅ»¯
+3 å¤šç»„ä»¶ä¼˜åŒ–
   shouldComponentUpdate(nextProps.nextState){
      if(nextProps.title===this.props.title){
        return false;
@@ -150,6 +176,6 @@ this.props.history.push({pathname:"/path/" + name});
      }
    
    }
-4 reselect ÓÅ»¯
+4 reselect ä¼˜åŒ–
 
   npm install reselect
