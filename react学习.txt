@@ -179,3 +179,104 @@ this.props.history.push({pathname:"/path/" + name});
 4 reselect 优化
 
   npm install reselect
+
+
+
+18  react-router4-路由的嵌套和动态传值
+
+   路由嵌套
+   1.在组件中需要嵌套路由的地方直接使用Route标签书写路由
+   
+   /*router.js*/
+
+  import React, { Component } from 'react'
+  import { BrowserRouter  as Router, Route, Switch} from 'react-router-dom'
+  import Home from './pages/home';
+
+  export default class Routers extends Component {
+    render() {
+      return (
+        <Router>
+          <App>
+            <Switch>
+              <Route path="/home" exact component={Home}></Route>
+            </Switch>
+          </App>
+        </Router>
+      )
+    }
+  }
+
+/*Home组件*/
+
+import React, { Component } from 'react'
+import { Route, Switch} from 'react-router-dom'
+import Menu from './pages/Menu';
+
+export default class Routers extends Component {
+  render() {
+    return (
+      <div>
+        <Route path="/home/menu" component={Menu}></Route>
+      </div>
+    )
+  }
+}
+
+ 2.使用render函数直接嵌套路由
+/*router.js*/
+
+    import React, { Component } from 'react'
+    import { BrowserRouter  as Router, Route, Switch} from 'react-router-dom'
+    import Menu from './pages/menu';
+    import Item1 from './pages/menu/item1';
+    import Item2 from './pages/menu/item2';
+
+    export default class Routers extends Component {
+      render() {
+        return (
+          <Router>
+            <App>
+              <Switch>
+                <Route path="/menu" render={()=>
+                    <Menu>
+                        <Route path="/menu/item1/:id" component={Item1}></Route>
+                      <Route path="/menu/item2/:id" component={Item2}></Route>
+                    <Menu/>
+                }></Route>
+              </Switch>
+            </App>
+          </Router>
+        )
+      }
+    }
+
+   /* Menu组件 */
+    import React, { Component } from 'react'
+    import { Link } from 'react-router-dom'
+
+    export default class Menu extends Component {
+      render() {
+        return (
+          <div>
+            <Link to="/menu/item1/123">item1</Link> <br/>
+            <Link to="/menu/item2/456">item2</Link>
+            <hr/>
+            {this.props.children}
+          </div>
+        )
+      }
+    }
+   /* Item1组件 */
+  import React, { Component } from 'react'
+
+  export default class Item1 extends Component {
+    render() {
+      return (
+        <div>
+          this is Item1 page;
+          {this.props.match.params.id}  
+        </div>
+      )
+    }
+  }
