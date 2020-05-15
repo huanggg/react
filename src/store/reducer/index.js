@@ -1,8 +1,8 @@
-import { SetUserInfo } from "../action";
+import { SET_USER_INFO,SetAge } from "../action";
 
 export default (state, action) => {
   switch (action.type) {
-    case SetUserInfo:
+    case SET_USER_INFO :
       console.log(555)
       return {
         userInfo: {
