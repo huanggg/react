@@ -280,3 +280,72 @@ export default class Routers extends Component {
       )
     }
   }
+  
+ 19 React中组件形式
+
+  类class声明的组件(类组件/容器组件)
+  
+  函数式声明的组件(函数组件/无状态组件/UI组件)
+  
+  样式化组件(styled-components)
+20 无状态组件(没有ref属性)
+ /*CusImg jsx   此组件只关心数据传递「props」，和状态无关*/
+   const CusImg = (props)=>(
+      <div className={props.style}>
+        <img src={props.imgurl}/>
+        <text className={props.textStyle}>{props.text}</text>
+        <div className={CusImg.counter}>{props.text}</div>
+      </div>
+   );
+    module.exports = CusImg
+ /*CusImg.module.css || CusImg.module.scss  在使用create-react-app脚手架创建的项目后,该项目是支持css-module的 相当于vue 中的scoped */
+   .counter{
+    text-align: center;
+    }
+    .spanText{
+        padding: 0 15px;
+    }
+    .textStyle{
+        background:red;
+        width:200px;
+        height:100px;
+    }
+    /*传统的组件调用方式  无状态组件性能确实比有状态的性能高，但是只是提高了 6% 左右 */
+    <CusImg   style={CusImg.spanText} textStyle={CusImg.textStyle}   imgurl={require('../imgs/qcord.png')}  text="二维码" />
+    /*render 方法调用无状态组件性能提高了 60% 左右 */  
+     {CusImg({
+           style:CusImg.root ,
+           textStyle:CusImg.textStyle,
+           imgurl:require('../imgs/qcord.png'),
+           text:"二维码"
+      })}     
+        
+         
+21 React中组件样式形式
+
+  在JSX上添加style属性定义行内样式
+  const btnStyle = {
+      width: '100px',
+      height: '40px',
+      borderRadius: '3px',
+      outline: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      background: '#abcdef',
+      color: '#fff'
+    }
+    <Fragment>
+        <button style = { btnStyle }>button按钮</button>
+        <button style = {{width:'200px';height:'20px'}}>button按钮</button>
+    </Fragment>
+
+  通过import关键字引入外部样式  (推荐使用css-module)  
+   1 样式文件的名称必须以xxx.module.css或者xxx.module.scss的形式命名:例如styles.module.css或者styles.module.scss
+
+   2 以变量的形式导入样式文件,比如:import styles from './style.module.css',如果是直接导入xxx.css,在JSX元素上的className的属性名称,是无法通过变      量,对象引入样式的,如果是直接引入样式,则在className的属性值中直接引入类名即可
+
+   3 className以变量引用的方式进行添加,例如:className ={styles.counter}
+
+   4 使用sass时,脚手架创建的项目,默认是支持sass的,使用时只需要安装一下node-sass这个包即可
+  
+  
