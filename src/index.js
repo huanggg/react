@@ -9,10 +9,10 @@ import { HashRouter as Router } from 'react-router-dom'
 import 'element-theme-default'
 ReactDOM.render(
   <Provider store={Store}>
-    <Router>
+//     <Router>
       {/* <App /> */}
       <MRoute />
-    </Router>
+//     </Router>
   </Provider>,
   document.getElementById("root")
 );
