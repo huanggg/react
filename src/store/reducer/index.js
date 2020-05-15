@@ -17,3 +17,16 @@ export default (state, action) => {
       return state;
   }
 };
+// const initState = {};
+//  dispatch({ type: "QUERY",{ name: "张三" }});
+// const home = (state = initState, { type, payload }) => {
+//   switch (type) {
+//     case QUERY:
+//       return { ...state, loading: false, ...payload };
+//     case SUBMIT:
+//       return { ...state, loading: false, ...payload };
+//     default:
+//       return { ...state, loading: true };
+//   }
+// };
+// export default home;
