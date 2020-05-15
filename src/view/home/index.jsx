@@ -25,6 +25,7 @@ function mapDispatch(dispatch) {
   return {
     changval: function() {
       dispatch({ type: "SET_USER_INFO", userInfo: "lishi111" });
+      dispatch({ type: "SetAge", Age: "32" });
     }
   };
 }
