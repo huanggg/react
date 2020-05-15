@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Fragment, Component } from 'react';
 import "./login.css";
 import LOGOimg from "@/static/images/LOGO.png";
 import logobig from "@/static/images/logobig.png";
@@ -135,7 +135,7 @@ class App extends Component {
   render() {
     const { value, conut, onIncreaseClick } = this.props;
     return (
-      <div className="login">
+      <Fragment>
         <header className="login-header">
           <img src={LOGOimg} alt="" style={logoimg} />
         </header>
@@ -200,7 +200,7 @@ class App extends Component {
             </div>
           </div>
         </div>
-      </div>
+       </Fragment>
     );
   }
 }
