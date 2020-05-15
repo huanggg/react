@@ -7,8 +7,11 @@ export default (state, action) => {
       return {
         userInfo: {
           name: action.userInfo
-        },
-        conut: 2
+        }
+      };
+     case SetAge:     
+      return {        
+        conut: action.Age
       };
     default:
       return state;
