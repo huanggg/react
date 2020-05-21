@@ -5,7 +5,6 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from 'react-redux'
 import Store from './store/state/index.js'
 import MRoute from './router/index.js'
-import { HashRouter as Router } from 'react-router-dom'
 import 'element-theme-default'
 ReactDOM.render(
   <Provider store={Store}>
