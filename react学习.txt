@@ -65,7 +65,7 @@ class Child extends Component {
     this.state = {};
   }
   handle () { 
-    // 往父组件传递一个对象参数,子组件触发一个自定义事件
+    // 往父组件传递一个对象参数,子组件派发一个自定义事件
     this.props.uphandle({
       name:'zhangsan'
     })
