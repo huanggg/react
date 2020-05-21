@@ -349,3 +349,18 @@ export default class Routers extends Component {
    4 使用sass时,脚手架创建的项目,默认是支持sass的,使用时只需要安装一下node-sass这个包即可
   
   22 精通 React 新特性——React Hooks
+  
+  23 import {
+      BrowserRouter as Router,
+      Switch,
+      Route,
+      Link,
+      useParams,
+      useRouteMatch,
+      Redirect,
+      useHistory
+    } from "react-router-dom";
+     let { topicId } = useParams();  相当于this.props.match.params.topicId
+     useHistory.push("/login");      相当于this.props.history.push(pathName:'/login')
+     let { item1, item2 } = useRouteMatch(); item1,item2是组件(useRouteMatch获取单前页面中（引入的||函数）组件)  
+     
