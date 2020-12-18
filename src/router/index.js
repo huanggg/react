@@ -18,3 +18,12 @@ class MRoute extends Component {
 }
 
 export default MRoute;
+
+
+const Root = ({ store }) => (
+  <Provider store={store}>
+    <Router>
+      <Route path="/" component={App} />
+    </Router>
+  </Provider>
+);
