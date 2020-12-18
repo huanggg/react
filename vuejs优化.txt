@@ -90,8 +90,59 @@ vue 打包文件加版本号防止缓存文件不更新
   4-3 element-ui 按需加载组件
 
   4-4 使用cdn 
- 
+   网络方面
+     减少http请求
+        合并js文件
 
+        合并css文件
+
+        雪碧图的使用(css sprite)
+
+        使用base64表示简单的图片
+    减小资源体积：
+
+        gzip压缩
+
+        js混淆
+
+        css压缩
+
+        图片压缩
+    缓存
+        DNS缓存
+
+        CDN部署与缓存
+
+        http缓存
+       
+        尽量避免dom操作
+        
+        1 将10W条数据一次渲染到页面上怎么防止ui渲染卡顿？？？
+
+                            分析：
+                            ·数据量过大，出现卡顿感的主要原因是，在每次循环中，都会修改 DOM 结构（导致页面dom树重绘,回流），并且由于数据量大，导致循环执行时间过长（导致页面卡顿），浏览器的渲                              染帧率过低（导致闪屏现象)。
+                            ·从 减少 DOM 操作次数 和 缩短循环时间 两个方面减少主线程阻塞的时间.
+                            ·通过 DocumentFragment 的使用，减少 DOM 操作次数，降低回流对性能的影响;
+                            （DocumentFragment是DOM的节点，但并不是DOM树的一部分，存在内存中。当append元素到document中时，会同时计算样式表，而append元素到documentFragment时，不会计算元素                              的样式表，所以documentFragment性能更优。）
+                            ·在缩短循环时间方面，我们可以通过 分治 的思想，将 100000 个 li 分批插入到页面中，并且我们通过 requestAnimatiomnFrame 在页面重绘前插入新节点。
+                            （requestAnimatiomnFrame的步伐跟着系统刷新的步伐走。能保证回调函数在屏幕每一次的刷新间隔只被执行一次，这样就不会引起丢帧现象。）
+
+                            DocumentFragment节点不属于文档树，继承的parentNode属性总是null。它有一个很实用的特点，当请求把一个DocumentFragment节点插入文档树时，插入的不是                                           DocumentFragment自身，而是它的所有子孙节点。这个特性使得DocumentFragment成了占位符，暂时存放那些一次插入文档的节点
+
+                           代码实现：
+
+                           function loop() {              
+                                window.requestAnimationFrame(()=>{
+                                    let fragment = document.createDocumentFragment()//创建DocumentFragment节点
+                                    for (let i = 0; i < 100000; i++) {
+                                        let li = document.createElement('li');
+                                        li.innerText = 'test'
+                                        fragment.appendChild(li);
+                                    }
+                                  document.body.appendChild(fragment);//然后用appendChild插入文档中             
+                                })
+                            }
+                            loop()
 
 vue单页面通过prerender-spa-plugin插件进行SEO优化
 
